@@ -44,13 +44,13 @@ const Launcher: React.FC<LauncherProps> = ({ isOpen, onClose }) => {
       e.preventDefault();
       setSelectedIndex((prev) => (prev - 1 + filteredApps.length) % (filteredApps.length || 1));
     } else if (e.key === 'Enter' && filteredApps.length > 0) {
-      handleLaunch(filteredApps[selectedIndex].name);
+      handleLaunch(filteredApps[selectedIndex].path);
     }
   };
 
-  const handleLaunch = async (appName: string) => {
+  const handleLaunch = async (appPath: string) => {
     try {
-      await invoke('launch_app', { appName });
+      await invoke('launch_app', { appPath });
       onClose();
     } catch (e) {
       console.error(e);
@@ -89,7 +89,7 @@ const Launcher: React.FC<LauncherProps> = ({ isOpen, onClose }) => {
                 className={`flex items-center px-4 py-3 mx-2 rounded-lg cursor-pointer transition-colors ${
                   index === selectedIndex ? 'bg-blue-600/30 text-white' : 'text-slate-300 hover:bg-slate-800'
                 }`}
-                onClick={() => handleLaunch(app.name)}
+                onClick={() => handleLaunch(app.path)}
                 onMouseEnter={() => setSelectedIndex(index)}
               >
                 <div className="w-8 h-8 rounded-md bg-slate-800 flex items-center justify-center mr-3 border border-slate-700">

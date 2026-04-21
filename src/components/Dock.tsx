@@ -14,9 +14,9 @@ const DOCK_APPS = [
 const Dock: React.FC = () => {
   const [hoveredApp, setHoveredApp] = useState<string | null>(null);
 
-  const handleLaunch = async (appName: string) => {
+  const handleLaunch = async (appPath: string) => {
     try {
-      await invoke('launch_app', { appName });
+      await invoke('launch_app', { appPath });
     } catch (e) {
       console.error(e);
     }
@@ -31,7 +31,7 @@ const Dock: React.FC = () => {
             className="relative group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-white/10 transition-all duration-200 cursor-pointer"
             onMouseEnter={() => setHoveredApp(app.id)}
             onMouseLeave={() => setHoveredApp(null)}
-            onClick={() => handleLaunch(app.name)}
+            onClick={() => handleLaunch(app.name)} // Dock still uses name for mocked items since it has no path, but let's pass path when possible if it were dynamic. For mock, just pass name as path.
           >
             <app.icon className="text-slate-300 group-hover:text-white transition-colors duration-200" size={24} />
 

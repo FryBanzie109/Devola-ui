@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { invoke } from '@tauri-apps/api/core';
 import Topbar from "./components/Topbar";
 import Dock from "./components/Dock";
 import Launcher from "./components/Launcher";
@@ -15,6 +16,11 @@ function App() {
       // Super/Meta key mock for Windows/Linux to open launcher
       if (e.key === 'Meta') {
         setIsLauncherOpen(prev => !prev);
+      }
+
+      // Quit app combo: Ctrl + Shift + Q
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'q') {
+        invoke('quit_app').catch(console.error);
       }
     };
 
